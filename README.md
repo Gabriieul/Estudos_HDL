@@ -1,1 +1,1 @@
-Exercícios de aprendizado da linguagem VERILOG.
+Exercícios básicos de introdução a linguagem VERILOG
