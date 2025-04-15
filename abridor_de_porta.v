@@ -15,7 +15,7 @@
 // 
 // Revision:
 // Revision 0.01 - File Created
-// Additional Comments:
+// Additional Comments: Exercício retirado do livro de Sistemas Digitais.
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
