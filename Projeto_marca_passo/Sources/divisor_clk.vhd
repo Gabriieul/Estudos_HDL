@@ -2,7 +2,6 @@
 -- Company: 
 -- Engineer: 
 -- 
--- Create Date: 18.08.2021 10:56:12
 -- Design Name: 
 -- Module Name: divisor_clk - Behavioral
 -- Project Name: 
