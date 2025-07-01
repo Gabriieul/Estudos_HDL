@@ -45,12 +45,14 @@ architecture Behavioral of marcapasso is
     signal estado_atual, proximo_estado: tipo_estado := e0;
     
     signal tA, tV, zA, zV: STD_LOGIC := '0';
-    signal change1: STD_LOGIC := '0';
-    signal change2: STD_LOGIC := '0';
     signal count_A, count_V: integer := 0;
+    signal pa_int, pv_int : STD_LOGIC := '0';
 
 begin
-     
+
+    pa <= pa_int;
+    pv <= pv_int;
+    
     process (clk, reset)
         begin 
             if reset='1' then
@@ -59,48 +61,62 @@ begin
               estado_atual <= proximo_estado;
             end if;
     end process;
-    
-    reset_atrio: process (tV, tA, clk, reset, change1, change2)
-        begin
-            
-            if rising_edge(clk) then
-                if change1='0' then
-                    if reset ='1' then
-                        count_A <= 0;
-                    elsif tA='1' then
-                        count_A <= 0;
-                    elsif count_A = 8 then
-                        change2 <= '1';
-                        count_A <= 0;
-                        zA <= '1';
-                        zV <= '0';
-                    else
-                        count_A <= count_A+1;
-                    end if;
+
+                
+    process(clk, reset)
+    begin
+        if reset = '1' then
+            count_A <= 0;
+            zA <= '0';
+        elsif rising_edge(clk) then
+            if tA = '1' then
+                if count_A = 8 then
+                    zA <= '1';
+                    count_A <= 0;
+                else
+                    count_A <= count_A + 1;
+                    zA <= '0';
                 end if;
-        
-                if change2 = '1' then
-                    if reset ='1' then
-                        count_V <= 0;
-                    elsif tV='1' then
-                        count_V <= 0;
-                    elsif count_V = 8 then  
-                        change1 <= '0';  
-                        count_V <= 0;                   
-                        zA <= '0';
-                        zV <= '1';
-                    else
-                        count_V <= count_V+1;
-                    end if;
-                end if;
+            else
+                count_A <= 0;
+                zA <= '0';
             end if;
+        end if;
     end process;
-    
-    FSM: process (clk, estado_atual, sa, zA, sv, zV)
+
+    process(clk, reset)
+    begin
+        if reset = '1' then
+            count_V <= 0;
+            zV <= '0';
+        elsif rising_edge(clk) then
+            if tV = '1' then
+                if count_V = 8 then
+                    zV <= '1';
+                    count_V <= 0;
+                else
+                    count_V <= count_V + 1;
+                    zV <= '0';
+                end if;
+            else
+                count_V <= 0;
+                zV <= '0';
+            end if;
+        end if;
+    end process;
+
+            
+    FSM: process (estado_atual, sa, zA, sv, zV)
     begin 
+
+        pa_int <= '0';
+        pv_int <= '0';
+        tA <= '0';
+        tV <= '0';
+        
         case estado_atual is
             when e0 =>
-                pV <= '0';
+                pv_int <= '0';
                 tA <= '1';
                 proximo_estado <= e1;
                 
@@ -117,29 +133,27 @@ begin
                 end if;
                 
             when e2 =>
-                pA <= '1';
+                pa_int <= '1';
                 proximo_estado <= e3;
                   
             when e3 =>
-                pA <= '0';
                 tV <= '1';
                 proximo_estado <= e4;
                 
             when e4 =>
-                tV <= '0';
+                tV <= '1';
                 if sv = '0' then 
                     if zV = '0' then
                         proximo_estado <= e4;
                     elsif zV = '1' then
                         proximo_estado <= e5;
-                    end if;  
-                          
+                    end if;     
                 elsif sv = '1' then 
                     proximo_estado <= e0;    
                 end if;
                 
             when e5 =>            
-                pV <= '1';
+                pv_int <= '1';
                 proximo_estado <= e0;
                 
             when others =>
