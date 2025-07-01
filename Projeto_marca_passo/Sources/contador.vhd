@@ -41,29 +41,27 @@ end contador;
 
 architecture Behavioral of contador is
 
-    signal sleda, sledv: STD_LOGIC_VECTOR (7 downto 0) := (others => '0');
+    signal count_a : unsigned(7 downto 0) := (others => '0');
+    signal count_v : unsigned(7 downto 0) := (others => '0');
 begin
 
-    
-    counter: process (clk, reset, spa)
-        begin
-            if reset = '1' then
-                sleda <= (others => '0');
-                sledv <= (others => '0');
-                
-            elsif rising_edge(clk) then
-                if spa = '1' and spv = '0' then
-                    sleda <= STD_LOGIC_VECTOR(to_unsigned(to_integer(unsigned(sleda))+1, 8));
-                elsif spv = '1' and spa = '0' then
-                    sledv <= STD_LOGIC_VECTOR(to_unsigned(to_integer(unsigned(sledv))+1, 8));
-                elsif spa = '1' and spv = '1' then
-                    sledv <= STD_LOGIC_VECTOR(to_unsigned(to_integer(unsigned(sledv))+1, 8));
-                    sleda <= STD_LOGIC_VECTOR(to_unsigned(to_integer(unsigned(sleda))+1, 8));
- 
+    process(clk, reset)
+    begin
+        if reset = '1' then
+            count_a <= (others => '0');
+            count_v <= (others => '0');
+        elsif rising_edge(clk) then
+            if spa = '1' and spv = '0' then
+                count_a <= count_a + 1;
+            elsif spv = '1' and spa = '0' then
+                count_v <= count_v + 1;
+            elsif spa = '1' and spv = '1' then
+                count_a <= count_a + 1;
+                count_v <= count_v + 1;
             end if;
-            end if;
-            
-        leda <= sleda;
-        ledv <= sledv;
-    end process; 
+        end if;
+    end process;
+
+    leda <= std_logic_vector(count_a);
+    ledv <= std_logic_vector(count_v); 
 end Behavioral;
