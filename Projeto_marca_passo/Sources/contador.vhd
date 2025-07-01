@@ -2,7 +2,6 @@
 -- Company: 
 -- Engineer: 
 -- 
--- Create Date: 18.08.2021 12:03:33
 -- Design Name: 
 -- Module Name: contador - Behavioral
 -- Project Name: 
