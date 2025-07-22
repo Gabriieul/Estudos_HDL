@@ -43,7 +43,7 @@ module Inv(x, F);
     
     always @ (x)
     begin 
-        F <= ~x;
+        F = ~x;
     end    
 endmodule
 
@@ -54,7 +54,7 @@ module Inv_2(x, y, F);
     
     always @ (x or y)
     begin 
-        F <= x | y;
+        F = x | y;
     end
 endmodule
 
@@ -65,7 +65,7 @@ module And(x, y, F);
     
     always @(x or y)
     begin 
-        F <= x & y;
+        F = x & y;
     end
 endmodule
 
