@@ -21,7 +21,7 @@
 
 
 module problem_2_1 (input [1:0] sel , input [3:0] data, 
-output reg data_out);
+output reg out);
 
 always @ (*)
 begin
@@ -38,9 +38,9 @@ end
  endmodule
  
 
-module problem_2_2 (input [2:0] data_input, output data_out);
+module problem_2_2 (input [2:0] data_input, output data_output);
  
-assign data_out = data_input [0] & data_input [1] | data_input [1] & data_input [2] | data_input [0] & data_input [2];
+assign data_output = data_input [0] & data_input [1] | data_input [1] & data_input [2] | data_input [0] & data_input [2];
 
 endmodule  
  
