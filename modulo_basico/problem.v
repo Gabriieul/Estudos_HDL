@@ -27,17 +27,17 @@ always @ (*)
 begin
 
     case (sel)
-        2'b00: data_out <= data [0];
-        2'b01: data_out <= data [1];
-        2'b10: data_out <= data [2];
-        2'b11: data_out <= data [3];
+        2'b00: data_out = data [0];
+        2'b01: data_out = data [1];
+        2'b10: data_out = data [2];
+        2'b11: data_out = data [3];
     endcase
         
 end
  
  endmodule
  
- 
+
 module problem_2_2 (input [2:0] data_input, output data_out);
  
 assign data_out = data_input [0] & data_input [1] | data_input [1] & data_input [2] | data_input [0] & data_input [2];
