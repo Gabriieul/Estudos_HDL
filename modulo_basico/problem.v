@@ -48,7 +48,7 @@ endmodule
 module problem_2_3 (input data_in, clk, reset, output data_out, output [1:0] state);
 reg [1:0] current;
 assign state = current;
-parameter [1:0] s0 = 2'b00, s1 = 2'b01, s2 = 2'b10, s3 = 2'b11;
+localparam [1:0] s0 = 2'b00, s1 = 2'b01, s2 = 2'b10, s3 = 2'b11;
 
 always @ (posedge clk)
 begin
